@@ -13,7 +13,8 @@ const App = () => {
       .then(response => {
         setPersons(response.data)
       })
-  })
+  }, [])  // empty array as second parameter means that the effect is 
+          // only run along with the first render
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
