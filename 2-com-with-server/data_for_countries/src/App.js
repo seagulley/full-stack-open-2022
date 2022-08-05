@@ -1,23 +1,24 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
+import DisplayCountries from './components/Countries'
 
 const App = () => {
   const [newFilter, setNewFilter] = useState('')
-  let countries = []
+  const [countryData, setCountryData] = useState([])
   
   useEffect(() => {
-    console.log('effect')
     axios
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
-        countries = response.data.map(country => country.name.common)
+        setCountryData(response.data)
       })
   }, [])
 
   return (
     <>
       <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
+      <DisplayCountries countryData={countryData} newFilter={newFilter} />
     </>
   )
 }
