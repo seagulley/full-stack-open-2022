@@ -24,10 +24,26 @@ const Number = ({newNumber, setNewNumber}) => {
 
 const PersonForm = ({states}) => {
     const [newName, setNewName, newNumber, setNewNumber, persons, setPersons] = states
+    
+    const updateNumber = updatePerson => {
+      const id = updatePerson.id
+      updatePerson.number = newNumber
+
+      numberService
+        .update(id, updatePerson)
+        .then(
+          setPersons(persons.map(person => person.id === id ? person = updatePerson : person))
+        )
+    }
+    
     const addPerson = (event) => {
       event.preventDefault()
-      if (persons.map(person => person.name.toLowerCase()).includes(newName.toLowerCase())) {
-        alert(`${newName} is already added to phonebook`)
+      const nameMatch = persons.find(person => person.name.toLowerCase().trim() === newName.toLowerCase().trim())
+      if (nameMatch) {
+        let person = nameMatch
+        if (window.confirm(`${person.name} is already added to the phonebook, replace the old number with a new one?`)) {
+          updateNumber(person)
+        }
         setNewName('')
         setNewNumber('')
         return

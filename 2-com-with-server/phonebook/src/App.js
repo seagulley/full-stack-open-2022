@@ -36,7 +36,7 @@ const App = () => {
       <PersonForm states={allStates} />
       <h2>Numbers</h2>
       <div>
-        <Persons persons={persons} newFilter={newFilter} />
+        <Persons persons={persons} setPersons={setPersons} newFilter={newFilter} />
       </div>
     </div>
   )
