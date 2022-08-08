@@ -1,3 +1,5 @@
+import numberService from '../services/Numbers'
+
 const Name = ({newName, setNewName}) => {
     const handleNameChange = (event) => {
       setNewName(event.target.value)
@@ -34,11 +36,16 @@ const PersonForm = ({states}) => {
       const person = {
         name: newName,
         number: newNumber,
-        id: persons.length + 1
       }
-      setPersons(persons.concat(person))
-      setNewName('')
-      setNewNumber('')
+
+      numberService
+        .create(person)
+        .then(response => {
+          setPersons(persons.concat(person))
+          setNewName('')
+          setNewNumber('')
+        })
+      
     }
     return (
       <form onSubmit={addPerson}>
