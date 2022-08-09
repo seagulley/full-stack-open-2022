@@ -1,0 +1,45 @@
+* {
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+h2 {
+    text-decoration: underline;
+    font-size: 2.5rem;
+}
+
+.notif {
+    display: flex;
+    background-color: rgb(206, 233, 189);
+    border: 2px solid green;
+    padding: 5px 2px;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 8px;
+    font-family: monospace;
+}
+
+input {
+    margin: 5px;
+}
+
+button {
+    margin: 2px;
+}
+
+button:hover {
+    background-color: rgb(186, 186, 186);
+}
+
+.error {
+    display: flex;
+    background-color: rgb(242, 195, 195);
+    border: 2px solid rgb(172, 30, 30);
+    padding: 5px 2px;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 8px;
+    font-family: monospace;
+}
+
+

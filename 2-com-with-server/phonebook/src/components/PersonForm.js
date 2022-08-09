@@ -23,7 +23,11 @@ const Number = ({newNumber, setNewNumber}) => {
 }
 
 const PersonForm = ({states}) => {
-    const [newName, setNewName, newNumber, setNewNumber, persons, setPersons] = states
+    const [newName, setNewName, 
+      newNumber, setNewNumber, 
+      newFilter, setNewFilter,
+      persons, setPersons,
+      setMessage, setErrMessage] = states
     
     const updateNumber = updatePerson => {
       const id = updatePerson.id
@@ -31,9 +35,24 @@ const PersonForm = ({states}) => {
 
       numberService
         .update(id, updatePerson)
-        .then(
+        .then(() => {
           setPersons(persons.map(person => person.id === id ? person = updatePerson : person))
-        )
+          setMessage(
+            `Added${updatePerson.name}`
+          )
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        })
+        .catch(err => {
+          setErrMessage(
+            `Information of ${persons.find(person => person.id === id).name} has already been removed from server`
+          )
+          setTimeout(() => {
+            setErrMessage(null)
+          }, 5000)
+          setPersons(persons.filter(person => person.id !== id))
+        })
     }
     
     const addPerson = (event) => {
@@ -58,10 +77,22 @@ const PersonForm = ({states}) => {
         .create(person)
         .then(response => {
           setPersons(persons.concat(person))
+          setMessage(
+            `Added ${person.name}`
+          )
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
           setNewName('')
           setNewNumber('')
         })
-      
+
+      // update persons to include the generated id
+      numberService
+        .getAll()
+        .then(response => {
+          setPersons(response.data)
+        })
     }
     return (
       <form onSubmit={addPerson}>
